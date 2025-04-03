@@ -1,7 +1,7 @@
  <?php
 	class Model{
 
-		public function get_text($key){
+		public static function get_text($key){
 			$lang='eng';
 			if(isset($_SESSION['lang'])){
 				$lang=$_SESSION['lang'];
@@ -10,14 +10,14 @@
 			#print_r($rez_text);exit();
 			return $rez_text[$key];
 		}
-		public function get_user_info($id = "" ){
+		public static function get_user_info($id = "" ){
 			if(!$id){ $id = $_SESSION['user']; }
   			$mysqli = new init_db;
   			$select = $mysqli->select("users" , "id='".$id."'"," ORDER by id DESC") or die('Error DB');
   			$result = $select->fetch_object();
   			return $result;
 		}
-		public function count_ref($id = "" ){
+		public static function count_ref($id = "" ){
 			if(!$id){ $id = $_SESSION['user']; }
   			$mysqli = new init_db;
 
@@ -31,7 +31,7 @@
 			}
   			return $colunt;
 		}
-		public function get_user_boosters(){
+		public static function get_user_boosters(){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("users_boosters" , "user_id='".$_SESSION['user']."'"," ORDER by id DESC") or die('Error DB');
@@ -40,7 +40,7 @@
 			}
   			return $colunt;
 		}
-		public function get_user_nfts(){
+		public static function get_user_nfts(){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("users_nfts" , "user_id='".$_SESSION['user']."'"," ORDER by id DESC") or die('Error DB');
@@ -49,7 +49,7 @@
 			}
   			return $colunt;
 		}
-		public function get_all_ntf(){
+		public static function get_all_ntf(){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("nft" , "id>0"," ORDER by id ASC") or die('Error DB');
@@ -58,7 +58,7 @@
 			}
 			return $colunt;
 		}
-		public function get_all_boosters(){
+		public static function get_all_boosters(){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("boosters" , "id>0"," ORDER by id ASC") or die('Error DB');
@@ -67,7 +67,7 @@
 			}
 			return $colunt;
 		}
-		public function update_online(){
+		public static function update_online(){
   			$mysqli = new init_db;
   			$colunt=array();
 
@@ -77,7 +77,7 @@
   			$select = $mysqli->update("users" , "last_online='".time()."'","id='".$_SESSION['user']."'") or die('Error DB');
 			return $last_online;
 		}
-		public function get_profit_online($sec){
+		public static function get_profit_online($sec){
   			$mysqli = new init_db;
   			$colunt=array();
   			if($sec>14400){
@@ -103,28 +103,28 @@
 
 			return $rate_users;
 		}
-		public function get_ntf_by_id($id){
+		public static function get_ntf_by_id($id){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("nft" , "id='".$id."'"," ORDER by id DESC") or die('Error DB');
   			$result_mysql = $select->fetch_object();
 			return $result_mysql;
 		}
-		public function get_img_ntf_by_id($id){
+		public static function get_img_ntf_by_id($id){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("nft" , "id='".$id."'"," ORDER by id DESC") or die('Error DB');
   			$result_mysql = $select->fetch_object();
 			return $result_mysql->img;
 		}
-		public function get_img_booster_by_id($id){
+		public static function get_img_booster_by_id($id){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("boosters" , "id='".$id."'"," ORDER by id DESC") or die('Error DB');
   			$result_mysql = $select->fetch_object();
 			return $result_mysql->img;
 		}
-		public function check_booster_user_id($id){
+		public static function check_booster_user_id($id){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("users_boosters" , "booster_id='".$id."' AND user_id='".$_SESSION['user']."'"," ORDER by id DESC") or die('Error DB');
@@ -135,7 +135,7 @@
 				return 0;
   			}
 		}
-		public function check_nft_user_id($id){
+		public static function check_nft_user_id($id){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("users_nfts" , "nft_id='".$id."' AND user_id='".$_SESSION['user']."'"," ORDER by id DESC") or die('Error DB');
@@ -146,14 +146,14 @@
 				return 0;
   			}
 		}
-		public function get_booster_by_id($id){
+		public static function get_booster_by_id($id){
   			$mysqli = new init_db;
   			$colunt=array();
   			$select = $mysqli->select("boosters" , "id='".$id."'"," ORDER by id DESC") or die('Error DB');
   			$result_mysql = $select->fetch_object();
 			return $result_mysql;
 		}
-		public function get_my_ref($id = "" ){
+		public static function get_my_ref($id = "" ){
 			if(!$id){ $id = $_SESSION['user']; }
   			$mysqli = new init_db;
 

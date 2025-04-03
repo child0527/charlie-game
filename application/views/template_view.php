@@ -1,88 +1,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<?php
-  $user_data=Model::get_user_info();
-if($user_data->online+3<time()){
-    ?>
-<style type="text/css">
-    /* HTML: <div class="loader"></div> */
-.loader {
-    margin: 40% auto;
-  width: 75px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  border: 8px solid #fff;
-  animation:
-    l20-1 0.8s infinite linear alternate,
-    l20-2 1.6s infinite linear;
-}
-@keyframes l20-1{
-   0%    {clip-path: polygon(50% 50%,0       0,  50%   0%,  50%    0%, 50%    0%, 50%    0%, 50%    0% )}
-   12.5% {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100%   0%, 100%   0%, 100%   0% )}
-   25%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 100% 100%, 100% 100% )}
-   50%   {clip-path: polygon(50% 50%,0       0,  50%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
-   62.5% {clip-path: polygon(50% 50%,100%    0, 100%   0%,  100%   0%, 100% 100%, 50%  100%, 0%   100% )}
-   75%   {clip-path: polygon(50% 50%,100% 100%, 100% 100%,  100% 100%, 100% 100%, 50%  100%, 0%   100% )}
-   100%  {clip-path: polygon(50% 50%,50%  100%,  50% 100%,   50% 100%,  50% 100%, 50%  100%, 0%   100% )}
-}
-@keyframes l20-2{ 
-  0%    {transform:scaleY(1)  rotate(0deg)}
-  49.99%{transform:scaleY(1)  rotate(135deg)}
-  50%   {transform:scaleY(-1) rotate(0deg)}
-  100%  {transform:scaleY(-1) rotate(-135deg)}
-}
-        .ppreloader{
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: #000 url('/loading.jpg?v=10') center center;
-            background-size: cover;
-            z-index: 9999999999999;
-        }
-        .ppreloader2{
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: url('/loading.gif?v=10') center center;
-/*            background: #000000c2;*/
-            background-size: cover;
-            z-index: 9999999999999;
-        }
-    </style>
-    <div class="ppreloader">
-        <div class="ppreloader2"></div>
-    </div>
-    
-    <script type="text/javascript">
-        
-        $(window).on('load', function() {
-            setTimeout(() => {
-                $('.ppreloader').fadeOut(1000);
-            }, 3000);
-        });
-    </script>
-<?php
-}
-?>
-
-<?php
-#$_SESSION['user']='79';
-function _l($key){
-    return Model::get_text($key);
-}
-if(isset($_SESSION[lang])){
-    $lang=$_SESSION['lang'];
-}else{
-    $lang='eng';
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -91,7 +9,7 @@ if(isset($_SESSION[lang])){
 </head>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script type="text/javascript">
-    var redic=1;
+    var redic=0;
     if(window.Telegram.WebApp.platform=="ios"){
           redic=0;
     }
@@ -106,17 +24,21 @@ if(isset($_SESSION[lang])){
     var user_name=window.Telegram.WebApp.initDataUnsafe.user.first_name;
     var user_surname=window.Telegram.WebApp.initDataUnsafe.user.last_name;
     var photo_url=window.Telegram.WebApp.initDataUnsafe.user.photo_url;
+    // var user_id=265397556;
+    // var user_username="";
+    // var user_name="Yuri";
+    // var user_surname="";
+    // var photo_url="https://t.me/i/userpic/320/NYCLcQm6EnB6LYY0Gqg2gsiZT1ZhficDZXEtUghbe8g5-eRnYIZlCH1hRCQ213tZ.svg";
     window.Telegram.WebApp.expand();
     window.Telegram.WebApp.isClosingConfirmationEnabled = true;
     window.Telegram.WebApp.ready();
     window.Telegram.WebApp.colorScheme="dark";
     window.Telegram.WebApp.headerColor="#000000";
     window.Telegram.WebApp.backgroundColor="#000000";
-
     $.ajax({
       type: "POST",
       url: 'get_login.php',
-      data: {"user_id": user_id, "name": user_name, "surname": user_surname, "nickname": user_username, "photo_url": photo_url},
+      data: {"user_id": user_id, "name": user_name, "surname": user_surname, "nickname": user_username, "photo_url": photo_url, "user_username" : ""},
       success: function (result) {
         if(result=="1"){
             if(window.Telegram.WebApp.initDataUnsafe.user.language_code=='ru'){
@@ -149,43 +71,43 @@ if(isset($_SESSION[lang])){
                 <span>DAY 1</span>
                 <p>+100 $CHRLEP</p>
                 <button style="z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" class="gradient" onclick="location.href='/claim_daily_reward_ccoin.php';">15 CCOIN DOUBLE</button>
-                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><? if($user_data->repeat_visit>=1){echo'CLAIMED';}else{echo'CLAIM';}?></button>
+                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><?php if($user_data->repeat_visit>=1){echo'CLAIMEdedD';}else{echo'CLAIM';}?></button>
             </div>
-            <div class="daily-day award_day2 <? if($user_data->repeat_visit==2){echo 'active';}?>" style="padding: 7px 16px;">
+            <div class="daily-day award_day2 <?php if($user_data->repeat_visit==2){echo 'active';}?>" style="padding: 7px 16px;">
                 <span>DAY 2</span>
                 <p>+200 $CHRLEP</p>
                 <button style="z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward_ccoin.php';">15 CCOIN DOUBLE</button>
-                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><? if($user_data->repeat_visit>=2){echo'CLAIMED';}else{echo'CLAIM';}?></button>
+                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><?php if($user_data->repeat_visit>=2){echo'CLAIMED';}else{echo'CLAIM';}?></button>
             </div>
-            <div class="daily-day award_day3 <? if($user_data->repeat_visit==3){echo 'active';}?>" style="padding: 7px 16px;">
+            <div class="daily-day award_day3 <?php if($user_data->repeat_visit==3){echo 'active';}?>" style="padding: 7px 16px;">
                 <span>DAY 3</span>
                 <p>+400 $CHRLEP</p>
                 <button style="z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward_ccoin.php';">15 CCOIN DOUBLE</button>
-                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><? if($user_data->repeat_visit>=3){echo'CLAIMED';}else{echo'CLAIM';}?></button>
+                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><?php if($user_data->repeat_visit>=3){echo'CLAIMED';}else{echo'CLAIM';}?></button>
             </div>
             <div class="daily-day award_day4 <? if($user_data->repeat_visit==4){echo 'active';}?>" style="padding: 7px 16px;">
                 <span>DAY 4</span>
                 <p>+550 $CHRLEP</p>
                 <button style="z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward_ccoin.php';">15 CCOIN DOUBLE</button>
-                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><? if($user_data->repeat_visit>=4){echo'CLAIMED';}else{echo'CLAIM';}?></button>
+                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><?php if($user_data->repeat_visit>=4){echo'CLAIMED';}else{echo'CLAIM';}?></button>
             </div>
-            <div class="daily-day award_day5 <? if($user_data->repeat_visit==5){echo 'active';}?>" style="padding: 7px 16px;">
+            <div class="daily-day award_day5 <?php if($user_data->repeat_visit==5){echo 'active';}?>" style="padding: 7px 16px;">
                 <span>DAY 5</span>
                 <p>+800 $CHRLEP</p>
                 <button style="z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward_ccoin.php';">15 CCOIN DOUBLE</button>
-                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><? if($user_data->repeat_visit>=5){echo'CLAIMED';}else{echo'CLAIM';}?></button>
+                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><?php if($user_data->repeat_visit>=5){echo'CLAIMED';}else{echo'CLAIM';}?></button>
             </div>
-            <div class="daily-day award_day6 <? if($user_data->repeat_visit==6){echo 'active';}?>" style="padding: 7px 16px;">
+            <div class="daily-day award_day6 <?php if($user_data->repeat_visit==6){echo 'active';}?>" style="padding: 7px 16px;">
                 <span>DAY 6</span>
                 <p>+1250 $CHRLEP</p>
                 <button style="z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward_ccoin.php';">15 CCOIN DOUBLE</button>
-                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><? if($user_data->repeat_visit>=6){echo'CLAIMED';}else{echo'CLAIM';}?></button>
+                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><?php if($user_data->repeat_visit>=6){echo'CLAIMED';}else{echo'CLAIM';}?></button>
             </div>
             <div class="daily-day  <? if($user_data->repeat_visit==7){echo 'active';}?> award_day7"style="padding: 7px 16px;">
                 <span>DAY 7</span>
                 <p>+1700 $CHRLEP</p>
                 <button style="z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward_ccoin.php';">15 CCOIN DOUBLE</button>
-                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><? if($user_data->repeat_visit>=7){echo'CLAIMED';}else{echo'CLAIM';}?></button>
+                <button style="z-index:999999999999;z-index:999999999999;margin-top: 2px;width: 150px;padding: 12px 11px;" onclick="location.href='/claim_daily_reward.php';"><?php if($user_data->repeat_visit>=7){echo'CLAIMED';}else{echo'CLAIM';}?></button>
             </div>
         </div>
     </div>

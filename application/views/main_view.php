@@ -5,9 +5,9 @@
 
 
             <?php
-
                 $nfts=Model::get_user_nfts();
                 $boosters=Model::get_user_boosters();
+
                 if($user_data->photo_url!=""){
                     $avatar=$user_data->photo_url;
                 }else{
